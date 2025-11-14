@@ -1,5 +1,5 @@
 from application import register_user, login_user
-1
+
 def menu():
     print("---Choose an option---")
     print("1. Register")
