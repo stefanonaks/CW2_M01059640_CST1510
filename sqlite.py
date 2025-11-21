@@ -54,3 +54,7 @@ def migrate_datasets_metadata():
 def migrate_it_tickets():
     tickets = pd.read_csv("DATA/it_tickets.csv")
     tickets.to_sql("it_tickets", conn, if_exists="append", index=False)
+
+query = "SELECT * FROM cyber_incidents"
+cyber_table = pd.read_sql_query(query, conn)
+print(cyber_table.head())
