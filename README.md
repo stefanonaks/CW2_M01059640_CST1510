@@ -1,9 +1,18 @@
-Building a Streamlit-based dashboard with login, database integration, and data visualization. Domain-specific flavors:
-
-Data Science → Analytics dashboard
-
-CyberSec → Log/alerting tool
-
-IT → API monitoring dashboard
-
-What You’ll Learn: You’ll put together everything you’ve learned into a capstone project. By the end, you’ll have a portfolio-ready Streamlit app hosted on GitHub and documented with a written report.
+# Week 7: Secure Authentication System
+Student Name: Stefano Villa Nakata
+Student ID: M01059640
+Course: CST1510 -CW2 - Multi-Domain Intelligence Platform
+# Project Description
+A command-line authentication system implementing secure password hashing
+This system allows users to register accounts and log in with proper password
+## Features
+- Secure password hashing using bcrypt with automatic salt generation
+- User registration with duplicate username prevention
+- User login with password verification
+- Input validation for usernames and passwords
+- File-based user data persistence
+## Technical Implementation
+- Hashing Algorithm: bcrypt with automatic salting
+- Data Storage: Plain text file (users.txt) with comma-separated values
+- Password Security: One-way hashing, no plaintext storage
+- Validation: Username (3-20 alphanumeric characters), Password (6-50 characters)
