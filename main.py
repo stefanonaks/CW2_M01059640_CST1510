@@ -1,4 +1,4 @@
-from application import register_user, login_user
+from APP.users import register_user, login_user
 
 def menu():
     print("---Choose an option---")
