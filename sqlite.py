@@ -43,6 +43,7 @@ def delete_user_data():
     conn.commit()
     print(f"Deleted {cursor.rowcount} user(s).")
 
+
 def migrate_cyber_incidents():
     cyber = pd.read_csv("DATA/cyber_incidents.csv")
     cyber.to_sql("cyber_incidents", conn, if_exists="append", index=False)
@@ -55,6 +56,21 @@ def migrate_it_tickets():
     tickets = pd.read_csv("DATA/it_tickets.csv")
     tickets.to_sql("it_tickets", conn, if_exists="append", index=False)
 
-query = "SELECT * FROM cyber_incidents"
-cyber_table = pd.read_sql_query(query, conn)
-print(cyber_table.head())
+
+def get_all_cyber_incidents():
+    query = "SELECT * FROM cyber_incidents"
+    cyber_table = pd.read_sql_query(query, conn)
+    conn.close()
+    return cyber_table
+
+def get_all_datasets_metadata():
+    query = "SELECT * FROM datasets_metadata"
+    datasets_table = pd.read_sql_query(query, conn)
+    conn.close()
+    return datasets_table
+
+def get_all_it_tickets():
+    query = "SELECT * FROM it_tickets"
+    tickets_table = pd.read_sql_query(query, conn)
+    conn.close()
+    return tickets_table
