@@ -1,5 +1,7 @@
 import sqlite3
-from APP.db import conn
+from APP.db import get_connection
+
+conn = get_connection()
 
 def add_user(conn, username, hash):
     cursor = conn.cursor()
@@ -15,17 +17,16 @@ def get_user(conn, username):
     cursor = conn.cursor()
     cursor.execute("""SELECT * FROM users WHERE username = ?""", (username,))
     user = cursor.fetchone()
-    conn.close()
     return user
 
-def get_users():
+def get_users(conn):
     cursor = conn.cursor()
     cursor.execute("""SELECT * FROM users""")
     all_users = cursor.fetchall()
-    conn.close()
+    conn.commit()
     return all_users
 
-def migrate_user_data():
+def migrate_user_data(conn):
     with open("DATA/users.txt") as f:
         users = f.readlines() 
     for user in users:
@@ -33,7 +34,7 @@ def migrate_user_data():
         add_user(conn, name, hash)
     conn.close()
 
-def delete_user_data():
+def delete_user_data(conn):
     cursor = conn.cursor()
     cursor.execute("""DELETE FROM users WHERE username = ?""", ("testuser",))
     conn.commit()

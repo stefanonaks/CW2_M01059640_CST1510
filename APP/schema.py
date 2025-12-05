@@ -1,7 +1,6 @@
 import sqlite3
-from APP.db import conn
 
-def create_table():
+def create_table(conn):
     cursor = conn.cursor()
     cursor.execute("""CREATE TABLE IF NOT EXISTS users (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
