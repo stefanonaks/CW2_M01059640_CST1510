@@ -8,5 +8,5 @@ def migrate_cyber_incidents():
 def get_all_cyber_incidents():
     query = "SELECT * FROM cyber_incidents"
     cyber_table = pd.read_sql_query(query, conn)
-    conn.close()
+    conn.commit()
     return cyber_table

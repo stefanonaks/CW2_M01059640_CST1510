@@ -8,5 +8,5 @@ def migrate_it_tickets():
 def get_all_it_tickets():
     query = "SELECT * FROM it_tickets"
     tickets_table = pd.read_sql_query(query, conn)
-    conn.close()
+    conn.commit()
     return tickets_table
