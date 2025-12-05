@@ -11,6 +11,13 @@ def add_user(conn, username, hash):
     print(f"Added user: {username}")
     conn.commit()
 
+def get_user(conn, username):
+    cursor = conn.cursor()
+    cursor.execute("""SELECT * FROM users WHERE username = ?""", (username,))
+    user = cursor.fetchone()
+    conn.close()
+    return user
+
 def get_users():
     cursor = conn.cursor()
     cursor.execute("""SELECT * FROM users""")
