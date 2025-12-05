@@ -1,27 +1,41 @@
 import streamlit as st
-import pandas as pd
-from APP.db import conn
-from APP.metadeta import get_all_datasets_metadata
-from APP.tickets import get_all_it_tickets
-from APP.incidents import get_all_cyber_incidents
-
+from APP.db import get_connection
+from APP.users import hash_password, validate_password, add_user, get_user
+conn = get_connection()
 st.set_page_config(
-    page_title="My App",
+    page_title="Home",
     page_icon=":dolphin:",
     layout="wide",
 )
 
-df = get_all_datasets_metadata()
-data = pd.DataFrame(df)
+st.title("HOME PAGE")
+st.write("Welcome. Use the sidebar to navigate through the app.")
 
-st.title("DASHBOARD")
-with st.expander("Datasets Metadata"):
-    st.write("Raw data:")
-    st.dataframe(data)
+if "logged_in" not in st.session_state:
+    st.session_state.logged_in = False
 
+tab_login, tab_register = st.tabs(["Login", "Register"])
 
-col1, col2 = st.columns(2)
-with col1:
-    st.subheader("silly goober ------>")
-with col2:
-    st.image("https://i.pinimg.com/736x/46/50/51/465051466fccf326ac202364300d5f02.jpg")
+with tab_login:
+    st.subheader("Login")
+    login_username = st.text_input("Username")
+    login_password = st.text_input("Password", type="password")
+
+    if st.button("Login"):
+        id, name, hashed_password, role = get_user(conn, login_username)
+        if login_username == name and validate_password(login_password, hashed_password):
+            st.session_state.logged_in = True
+            st.success("Logged in successfully!")
+            st.switch_page("pages/1_Dashboard.py")
+
+with tab_register:
+    st.subheader("Register")
+    register_username = st.text_input("New Username")
+    register_password = st.text_input("New Password", type="password")
+
+    if st.button("Register"):
+        hashed_password = hash_password(register_password)
+        add_user(conn, register_username, hashed_password)
+        st.success("Registered successfully! You can now log in.")
+
+st.session_state
